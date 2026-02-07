@@ -227,6 +227,13 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
+  field_citation:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
+    region: content
   flag_export_content:
     settings: {  }
     third_party_settings: {  }
@@ -236,7 +243,6 @@ hidden:
   comment: true
   draft: true
   field_all_related_content: true
-  field_citation: true
   field_communities: true
   field_cultural_protocols: true
   field_in_collection: true

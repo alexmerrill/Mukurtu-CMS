@@ -30,6 +30,7 @@ third_party_settings:
         - group_sidebar_mukurtu_fields
         - group_additional_metadata
         - group_rights
+        - group_citation
         - flag_export_content
       label: Metadata
       parent_name: ''
@@ -59,7 +60,6 @@ third_party_settings:
         - field_coverage_description
         - field_transcription
         - field_all_related_content
-        - field_citation
         - comment
       label: 'Primary Fields'
       parent_name: ''
@@ -147,6 +147,26 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: sidebar-section
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_citation:
+      children:
+        - field_citation
+      label: Citation
+      parent_name: group_metadata
+      region: content
+      weight: 40
+      format_type: html_element
+      format_settings:
+        classes: sidebar-citation
         show_empty_fields: false
         id: ''
         label_as_html: false

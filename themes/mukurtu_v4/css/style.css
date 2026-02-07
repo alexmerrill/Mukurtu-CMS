@@ -4882,13 +4882,21 @@ header {
   -webkit-border-before: 5px solid var(--mukurtu-view-row-divider-color);
           border-block-start: 5px solid var(--mukurtu-view-row-divider-color);
 }
-.full-node__citation .field--name-field-citation {
-  -webkit-padding-before: var(--v-space-2xs);
-          padding-block-start: var(--v-space-2xs);
-  -webkit-margin-before: var(--v-space-2xs);
-          margin-block-start: var(--v-space-2xs);
-  -webkit-border-before: 5px solid var(--mukurtu-view-row-divider-color);
-          border-block-start: 5px solid var(--mukurtu-view-row-divider-color);
+.sidebar-citation {
+  -webkit-padding-before: var(--v-space-4xxs);
+          padding-block-start: var(--v-space-4xxs);
+  -webkit-margin-before: var(--v-space-4xs);
+          margin-block-start: var(--v-space-4xs);
+  -webkit-border-before: 5px solid var(--brand-secondary);
+          border-block-start: 5px solid var(--brand-secondary);
+  padding: var(--v-space-4xxs);
+}
+.sidebar-citation .field--name-field-citation .field__label {
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-xs);
+}
+.sidebar-citation .field--name-field-citation .field__item {
+  line-height: var(--line-height-s);
 }
 .full-node__comment {
   -webkit-margin-before: var(--v-space-xs);

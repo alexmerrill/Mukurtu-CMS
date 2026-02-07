@@ -53,6 +53,7 @@ third_party_settings:
         - group_sidebar_mukurtu_fields
         - group_additional_metadata
         - group_rights
+        - group_citation
       label: Metadata
       parent_name: ''
       region: content
@@ -104,6 +105,26 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: sidebar-section
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_citation:
+      children:
+        - field_citation
+      label: Citation
+      parent_name: group_metadata
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: sidebar-citation
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -336,6 +357,13 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_citation:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
   flag_export_content:
     settings: {  }
     third_party_settings: {  }
@@ -344,7 +372,6 @@ content:
 hidden:
   draft: true
   field_child_collections: true
-  field_citation: true
   field_collection_type: true
   field_content_type: true
   field_in_collection: true
