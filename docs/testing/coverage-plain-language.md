@@ -6,6 +6,29 @@ Tests are grouped by the feature they protect. Each item is one test that runs a
 
 ---
 
+## Community and Protocol Access
+*See [coverage.md § mukurtu_protocol](coverage.md#mukurtu_protocol)*
+
+Mukurtu controls who can see and edit content through a system of communities and protocols. These tests verify the access rules are enforced correctly.
+
+**Community visibility**
+- A community set to "community only" is hidden from non-members and visible to members.
+- A community set to "public" is visible to everyone, including users who have not joined.
+- In both cases, only community managers can edit a community — regular members cannot.
+- No user (including managers) can delete a community through normal access.
+
+**Protocol-controlled content (any/all, open/strict)**
+- Content with no protocols assigned is hidden from everyone except its owner.
+- Content under a single open protocol is visible to all users, including non-members.
+- Content under a single strict protocol is hidden from non-members; members can view but not edit.
+- A contributor who owns the content can edit and delete it; a non-owner contributor cannot.
+- A protocol steward can edit and delete content regardless of ownership.
+- When content requires membership in **any** one of several protocols, holding a role in one is sufficient.
+- When content requires membership in **all** protocols, a user must qualify in every one — partial membership is not enough.
+- Mixed open/strict multi-protocol sets behave correctly: the strict protocol's requirements are not bypassed by the presence of an open protocol.
+
+---
+
 ## Collections
 *See [coverage.md § mukurtu_collection](coverage.md#mukurtu_collection)*
 

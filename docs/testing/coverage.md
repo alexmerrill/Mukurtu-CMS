@@ -1,7 +1,7 @@
 # Mukurtu CMS — Test Infrastructure & Coverage
 **Repo:** https://github.com/MukurtuCMS/Mukurtu-CMS
 **Plain-language summary:** [coverage-plain-language.md](coverage-plain-language.md)
-**Last updated:** 2026-03-27
+**Last updated:** 2026-04-03
 
 ---
 
@@ -73,6 +73,24 @@ PHPUnit\Framework\TestCase (no Drupal bootstrap)
 **Existing tests:** `AccessByProtocolTest`, `CommunityEntityAccessTest`, `ProtocolEntityAccessTest`, `CollectionEntityTest` (access), `PersonalCollectionEntityAccessTest`
 
 **Bug fixed (2026-03-19):** `MukurtuProtocolNodeAccessControlHandler` — `all`-mode content incorrectly granted edit/delete when user held a qualifying role in any one protocol instead of all of them. The loop was restructured to fail fast when any protocol in the set doesn't satisfy the role requirement. This is the only production code change across all sessions.
+
+**`AccessByProtocolTest`** — Tests content access across the full protocol-control matrix: open/strict access modes, `any`/`all` sharing settings, non-member/member/contributor/protocol_steward roles, single vs. multiple protocols, mixed open/strict combinations. Uses a generic `thing` node type so tests are independent of any specific Mukurtu content type. Bug fix (2026-04-03): `testEmptyorNoProtocols()` had a triple-duplicate `'view'` assertion — corrected to `view`/`update`/`delete` so non-owner update/delete access is actually checked.
+
+Note: intentionally extends `KernelTestBase` directly (not `MukurtuKernelTestBase`) — this test IS the protocol access mechanism under test and requires a fixture incompatible with the shared base (generic node type, `contributor` OG role, 3×open + 3×strict protocols).
+
+**`CommunityEntityAccessTest`** — Tests Community entity access and basic entity API.
+
+*10 assertions-bearing tests:*
+- `testCommunityOnlyCommunity` — non-member denied view; member can view but cannot edit/delete; community manager can view and update, but cannot delete.
+- `testPublicCommunity` — non-member can view; member can view but cannot edit/delete; community manager can view and update, but cannot delete.
+- `testGetName` / `testSetName` — name getter/setter round-trip.
+- `testGetDescription` / `testSetDescription` — description getter/setter round-trip.
+- `testGetSharingSetting` / `testSetSharingSetting` — sharing setting getter/setter round-trip.
+- `testGetCreatedTime` / `testSetCreatedTime` — created timestamp getter/setter round-trip.
+
+*11 stubs flagged `markTestIncomplete()`:* `testGetCommunityType`, `testSetCommunityType`, `testGetParentCommunity`, `testGetThumbnailImage`, `testSetThumbnailImage`, `testGetBannerImage`, `testSetBannerImage`, `testGetChildCommunities`, `testIsParentCommunity`, `testIsChildCommunity`, `testGetProtocols`.
+
+Note: intentionally extends `KernelTestBase` directly — community access is governed by `community_manager` OG roles on the community group type; no protocol fixture is needed or appropriate.
 
 ---
 
@@ -188,6 +206,8 @@ All test classes use `#[\PHPUnit\Framework\Attributes\Group('...')]` instead of 
 
 The `<listeners>` block in `phpunit.xml` is **intentionally kept**. `DrupalListener` implements the PHPUnit 9 listener interface, not `PHPUnit\Runner\Extension\Extension`, and cannot be migrated to `<extensions>`. It emits one deprecation notice per run until Drupal core updates the class.
 
+`SYMFONY_DEPRECATIONS_HELPER` is set to `"weak"` — deprecation notices from dependencies (OG, blazy, etc.) appear in PHPUnit output without failing the suite. Previously set to `"disabled"` which silenced them entirely. Change from `disabled` → `weak` (2026-04-03) ensures deprecations surface as warnings during development so they can be addressed before they become failures.
+
 `phpunit.xml` schema declaration added:
 ```xml
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -229,6 +249,11 @@ The `<listeners>` block in `phpunit.xml` is **intentionally kept**. `DrupalListe
 | `modules/mukurtu_browse/tests/src/Unit/MukurtuBoundingBoxTest.php` | **Created** (10 tests) | 2026-03-24 | [`db1d016f`](https://github.com/alexmerrill/Mukurtu-CMS/commit/db1d016f) |
 | `phpunit.xml` | Added kernel + unit testsuite directories; PHPUnit 10 schema + @group fixes | 2026-03-19 / 2026-03-24 | [`12b71fca`](https://github.com/alexmerrill/Mukurtu-CMS/commit/12b71fca) [`56921141`](https://github.com/alexmerrill/Mukurtu-CMS/commit/56921141) [`bc26108d`](https://github.com/alexmerrill/Mukurtu-CMS/commit/bc26108d) [`840fb318`](https://github.com/alexmerrill/Mukurtu-CMS/commit/840fb318) [`2302d328`](https://github.com/alexmerrill/Mukurtu-CMS/commit/2302d328) [`d2061340`](https://github.com/alexmerrill/Mukurtu-CMS/commit/d2061340) [`9618bddb`](https://github.com/alexmerrill/Mukurtu-CMS/commit/9618bddb) [`d085dfa6`](https://github.com/alexmerrill/Mukurtu-CMS/commit/d085dfa6) [`e5ea5e23`](https://github.com/alexmerrill/Mukurtu-CMS/commit/e5ea5e23) [`db1d016f`](https://github.com/alexmerrill/Mukurtu-CMS/commit/db1d016f) |
 | `modules/mukurtu_import/src/Plugin/migrate/process/EnsureHttps.php` | **Created** — pass-through `ensure_https` process plugin stub | 2026-03-27 | [`984026fb`](https://github.com/alexmerrill/Mukurtu-CMS/commit/984026fb) |
+| `.github/workflows/build-and-test.yml` | Added `"unit"` to CI test-suite matrix | 2026-04-03 | [`921da676`](https://github.com/alexmerrill/Mukurtu-CMS/commit/921da676) |
+| `phpunit.xml` | `SYMFONY_DEPRECATIONS_HELPER` changed from `disabled` to `weak` | 2026-04-03 | [`921da676`](https://github.com/alexmerrill/Mukurtu-CMS/commit/921da676) |
+| `modules/mukurtu_protocol/tests/src/Kernel/Access/AccessByProtocolTest.php` | Bug fix — triple-duplicate `view` assertion corrected to `view`/`update`/`delete`; docblock added explaining intentional `KernelTestBase` extension | 2026-04-03 | [`921da676`](https://github.com/alexmerrill/Mukurtu-CMS/commit/921da676) |
+| `modules/mukurtu_protocol/tests/src/Kernel/Access/CommunityEntityAccessTest.php` | 11 empty `// TODO` stubs replaced with `markTestIncomplete()`; docblock added | 2026-04-03 | [`921da676`](https://github.com/alexmerrill/Mukurtu-CMS/commit/921da676) |
+| `modules/mukurtu_protocol/tests/src/Kernel/Access/ProtocolEntityAccessTest.php` | Docblock added explaining intentional `KernelTestBase` extension | 2026-04-03 | [`921da676`](https://github.com/alexmerrill/Mukurtu-CMS/commit/921da676) |
 
 **Total new tests added: ~184** across 20 test classes and 10 modules. Additionally, 3 pre-existing `ImportListStringTest` tests in `mukurtu_import` were unblocked by the `EnsureHttps.php` production fix (those tests exist in the repo but were previously failing with `PluginNotFoundException`).
 
