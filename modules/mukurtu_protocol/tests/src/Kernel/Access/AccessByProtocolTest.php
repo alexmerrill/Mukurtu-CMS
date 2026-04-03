@@ -19,6 +19,14 @@ use Drupal\mukurtu_protocol\CulturalProtocolControlledInterface;
 
 /**
  * Tests access to content by protocol control.
+ *
+ * Intentionally extends KernelTestBase directly rather than
+ * MukurtuKernelTestBase. This test IS the protocol-access mechanism under test:
+ * it needs a generic 'thing' node type, a 'contributor' OG role, and 3×open +
+ * 3×strict protocol fixtures that differ fundamentally from the single-protocol
+ * fixture in the base class. Forcing this into the shared base would either
+ * couple the base to node-type-specific permissions or require overriding the
+ * entire fixture, providing no real benefit.
  */
 #[\PHPUnit\Framework\Attributes\Group('mukurtu_protocol')]
 class AccessByProtocolTest extends KernelTestBase {
@@ -316,8 +324,8 @@ class AccessByProtocolTest extends KernelTestBase {
 
     // Non-owner.
     $this->assertEquals(FALSE, $content->access('view', $user));
-    $this->assertEquals(FALSE, $content->access('view', $user));
-    $this->assertEquals(FALSE, $content->access('view', $user));
+    $this->assertEquals(FALSE, $content->access('update', $user));
+    $this->assertEquals(FALSE, $content->access('delete', $user));
 
     // Owner.
     $this->assertEquals(TRUE, $content->access('view', $owner));

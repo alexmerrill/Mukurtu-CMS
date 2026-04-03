@@ -13,6 +13,12 @@ use Drupal\user\Entity\User;
 
 /**
  * Tests access to communities.
+ *
+ * Intentionally extends KernelTestBase directly rather than
+ * MukurtuKernelTestBase. Community access is governed by community_manager OG
+ * roles and community-level sharing settings — no protocol fixture is required
+ * or appropriate here. The base class's protocol+node fixture would add
+ * unnecessary overhead without providing useful setup for these tests.
  */
 #[\PHPUnit\Framework\Attributes\Group('mukurtu_protocol')]
 class CommunityEntityAccessTest extends KernelTestBase {
@@ -243,7 +249,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testGetCommunityType()
   {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -251,7 +257,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testSetCommunityType()
   {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -319,7 +325,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    * Test getParentCommunity().
    */
   public function testGetParentCommunity() {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -327,7 +333,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testGetThumbnailImage()
   {
-    // TODO?
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -335,7 +341,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testSetThumbnailImage()
   {
-    // TODO?
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -343,7 +349,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testGetBannerImage()
   {
-    // TODO?
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -351,7 +357,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testSetBannerImage()
   {
-    // TODO?
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -359,7 +365,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testGetChildCommunities()
   {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -367,7 +373,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testIsParentCommunity()
   {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -375,7 +381,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testIsChildCommunity()
   {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
   /**
@@ -383,7 +389,7 @@ class CommunityEntityAccessTest extends KernelTestBase {
    */
   public function testGetProtocols()
   {
-    // TODO
+    $this->markTestIncomplete('Not yet implemented.');
   }
 
 }

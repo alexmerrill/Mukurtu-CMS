@@ -14,6 +14,13 @@ use Drupal\user\Entity\User;
 
 /**
  * Tests access to protocols.
+ *
+ * Intentionally extends KernelTestBase directly rather than
+ * MukurtuKernelTestBase. This test verifies the Protocol entity's own access
+ * control, which is governed by community membership and community_manager
+ * OG roles — not by the protocol-controlled-content fixture provided by the
+ * base class. The fixture (3 communities, community_manager role) is
+ * incompatible with the single community+protocol base-class fixture.
  */
 #[\PHPUnit\Framework\Attributes\Group('mukurtu_protocol')]
 class ProtocolEntityAccessTest extends KernelTestBase {
