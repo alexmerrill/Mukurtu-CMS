@@ -24,6 +24,7 @@ documentation on how to use @include media(). */
 @use '01-atoms/select/select';
 @use '01-atoms/status-badge/status-badge';
 @use '01-atoms/textfield/textfield';
+@use '01-atoms/translation-status-badge/translation-status-badge';
 @use '02-molecules/callout/callout';
 @use '02-molecules/carousels/carousels';
 @use '02-molecules/consent-popup/consent-popup';
@@ -64,5 +65,6 @@ documentation on how to use @include media(). */
 @use '04-templates/local-contexts/local-contexts-directory';
 @use '04-templates/layout/layout-builder';
 @use '04-templates/page/page';
+@use '04-templates/submissions/submissions';
 @use '04-templates/taxonomy-term/taxonomy-term';
 @use '04-templates/word-list/word-list';
